@@ -17,4 +17,4 @@ jobs:
         architecture: x64
 
     - name: Run pre-commit checks
-      uses: pre-commit/action@v3.2.2
+      uses: pre-commit/action@v3.0.0
