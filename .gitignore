@@ -1,0 +1,9 @@
+model/
+data/
+*.pyc
+*.log
+*.DS_STORE
+*.pt
+*.th
+*.csv
+*.xlsx
