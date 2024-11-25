@@ -8,16 +8,12 @@ from aif360.algorithms.preprocessing.optim_preproc import (
     OptimPreproc as aifOptimPreproc,
 )
 from aif360.algorithms.preprocessing.optim_preproc_helpers.opt_tools import OptTools
-from aif360.algorithms.preprocessing.optim_preproc_helpers.distortion_functions import (
-    get_distortion_adult,
-    get_distortion_german,
-    get_distortion_compas,
-)
 
 from MAF2024.algorithms.preprocessing.optim_preproc_helpers.data_prepro_function import (
     load_preproc_data_adult,
     load_preproc_data_german,
     load_preproc_data_compas,
+    get_optim_options,
 )
 from MAF2024.datamodule.dataset import AdultDataset, GermanDataset, CompasDataset
 from MAF2024.metric import common_utils
@@ -40,7 +36,7 @@ class OptimPreproc:
         if self.dataset_name not in dataset_loaders:
             raise ValueError(f"Unsupported dataset: {self.dataset_name}")
 
-        self.dataset_orig = dataset_loaders[self.dataset_name]()
+        self.dataset_orig = dataset_loaders[self.dataset_name]([self.protected])
         self.dataset_orig_train, self.dataset_orig_vt = self.dataset_orig.split(
             [0.7], shuffle=True, seed=1
         )
@@ -49,12 +45,9 @@ class OptimPreproc:
         )
         self.privileged_groups = [{self.protected: 1}]
         self.unprivileged_groups = [{self.protected: 0}]
-        self.optim_options = {
-            "distortion_fun": get_distortion_adult,
-            "epsilon": 0.05,
-            "clist": [0.99, 1.99, 2.99],
-            "dlist": [0.1, 0.05, 0],
-        }
+        self.optim_options = get_optim_options(
+            dataset_name=self.dataset_name, protected=self.protected
+        )
 
     def fit(self):
         op = aifOptimPreproc(
@@ -64,14 +57,14 @@ class OptimPreproc:
             privileged_groups=self.privileged_groups,
         )
 
-        op = op.fit(self.dataset_orig_train)
+        op.fit(self.dataset_orig_train)
 
-        transf_train = OP.transform(self.dataset_orig_train, transform_Y=True)
+        transf_train = op.transform(self.dataset_orig_train, transform_Y=True)
         transf_train = self.dataset_orig_train.align_datasets(transf_train)
 
         dataset_orig_test = transf_train.align_datasets(self.dataset_orig_test)
 
-        transf_test = OP.transform(dataset_orig_test, transform_Y=True)
+        transf_test = op.transform(dataset_orig_test, transform_Y=True)
         transf_test = dataset_orig_test.align_datasets(transf_test)
         return transf_train, transf_test
 
@@ -157,8 +150,8 @@ class OptimPreproc:
 
 
 if __name__ == "__main__":
-    OP = OptimPreproc()
-    orig_metrics, transf_metrics = OP.run()
+    op = OptimPreproc(dataset_name="adult", protected="race")
+    orig_metrics, transf_metrics = op.run()
     print("Metrics for original data:")
     print(orig_metrics)
     print("\nMetrics for transformed data:")

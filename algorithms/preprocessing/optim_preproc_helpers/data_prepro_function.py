@@ -9,6 +9,44 @@ import pandas as pd
 import numpy as np
 import os
 
+from aif360.algorithms.preprocessing.optim_preproc_helpers.distortion_functions import (
+    get_distortion_adult,
+    get_distortion_german,
+    get_distortion_compas,
+)
+
+
+def get_optim_options(dataset_name: str = "adult", protected: str = "sex"):
+    if dataset_name == "adult":
+        return {
+            "distortion_fun": get_distortion_adult,
+            "epsilon": 0.05,
+            "clist": [0.99, 1.99, 2.99],
+            "dlist": [0.1, 0.05, 0],
+        }
+    elif dataset_name == "german":
+        if protected == "age":
+            return {
+                "distortion_fun": get_distortion_german,
+                "epsilon": 0.1,
+                "clist": [0.99, 1.99, 2.99],
+                "dlist": [0.1, 0.05, 0],
+            }
+        else:
+            return {
+                "distortion_fun": get_distortion_german,
+                "epsilon": 0.05,
+                "clist": [0.99, 1.99, 2.99],
+                "dlist": [0.1, 0.05, 0],
+            }
+    elif dataset_name == "compas":
+        return {
+            "distortion_fun": get_distortion_compas,
+            "epsilon": 0.05,
+            "clist": [0.99, 1.99, 2.99],
+            "dlist": [0.1, 0.05, 0],
+        }
+
 
 def load_preproc_data_adult(protected_attributes=None, sub_samp=False, balance=False):
     def custom_preprocessing(df):
