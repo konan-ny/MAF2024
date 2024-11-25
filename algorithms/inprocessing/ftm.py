@@ -44,6 +44,7 @@ class FTMFairClassifier:
         self.dataset_orig_train, self.dataset_orig_test = self.dataset_orig.split(
             [0.7], shuffle=True, seed=1
         )
+
         scaler = MaxAbsScaler()
         self.dataset_orig_train.features = scaler.fit_transform(
             self.dataset_orig_train.features
@@ -81,13 +82,13 @@ class FTMFairClassifier:
         )
 
         self.train_loader = torch.utils.data.DataLoader(
-            self.train_dset, shuffle=True, drop_last=True, batch_size=2048
+            self.train_dset, shuffle=True, drop_last=True, batch_size=128
         )
         self.traineval_loader = torch.utils.data.DataLoader(
-            self.train_dset, shuffle=False, drop_last=False, batch_size=4096
+            self.train_dset, shuffle=False, drop_last=False, batch_size=128
         )
         self.test_loader = torch.utils.data.DataLoader(
-            self.test_dset, shuffle=False, drop_last=False, batch_size=4096
+            self.test_dset, shuffle=False, drop_last=False, batch_size=128
         )
 
     def _compute_slide_penalty(self, pred, gamma=0.01, tau=0.5):
@@ -244,7 +245,7 @@ if __name__ == "__main__":
     use_cuda = False
     reg = 0.9
 
-    ftm = FTMFairClassifier(dataset_name="adult", protected="sex", use_cuda=use_cuda)
+    ftm = FTMFairClassifier(dataset_name="german", protected="sex", use_cuda=use_cuda)
     metrics_orig, metrics_transf = ftm.run(reg)
     print("Metrics for original data:")
     print(metrics_orig)

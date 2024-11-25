@@ -76,13 +76,13 @@ class SlideFairClassifier:
         )
 
         self.train_loader = torch.utils.data.DataLoader(
-            self.train_dset, shuffle=True, drop_last=True, batch_size=2048
+            self.train_dset, shuffle=True, drop_last=True, batch_size=128
         )
         self.traineval_loader = torch.utils.data.DataLoader(
-            self.train_dset, shuffle=False, drop_last=False, batch_size=4096
+            self.train_dset, shuffle=False, drop_last=False, batch_size=128
         )
         self.test_loader = torch.utils.data.DataLoader(
-            self.test_dset, shuffle=False, drop_last=False, batch_size=4096
+            self.test_dset, shuffle=False, drop_last=False, batch_size=128
         )
 
     def _compute_slide_penalty(self, pred, gamma=0.7, tau=0.1):
