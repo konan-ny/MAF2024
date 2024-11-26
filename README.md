@@ -137,7 +137,7 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
    - text
      - KoBBQ [📚 data](https://github.com/naver-ai/KoBBQ/tree/main)
      - CREHate [📚 data](https://github.com/nlee0212/CREHate)
-     - co-occurrence-bias [📚 data]()
+     - co-occurrence-bias [📚 data](https://drive.google.com/file/d/19I7ron7FycqqJqRH0vdVHW_nCAKOf5g5/view)
      - latte [📚 data]()
      - RH [📚 data](https://github.com/jongwonryu/RH)
      - Koglish [📚 data](https://huggingface.co/Jangyeong)
@@ -145,7 +145,9 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
     - audio
       - esyoon/coraal_clean_test [📚 data](https://huggingface.co/datasets/esyoon/coraal_clean_test)
 
-
+    개별 다운로드가 필요한 모델은 다음과 같습니다.
+    - ConCSE [📚 model](https://drive.google.com/drive/folders/1k3JDP4WfRkVTypaiL3L1RO1qeve2yvhF?usp=sharing)
+    - Fair Dimension Filtering [📚 model]()
    개별 알고리즘에 따른 데이터 및 모델 세팅이 필요합니다. 데이터와 모델은 각각 data와 model 폴더를 생성하여 다음과 같은 구조로 설정합니다.
    4-1. data
    ```bash
@@ -160,9 +162,10 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
       ㄴlist_attr_celeba.txt
       ㄴlist_eval_partition.csv
     ㄴco-occurrence-bias
-      ㄴdata_statistics
-      ㄴLAMA_TREx #preprocess_LAMA_TREx.py 실행을 통해 생성
-      ㄴoriginal_LAMA #prepare_dataset.sh 실행을 통해 생성
+      ㄴdata_statistics #링크를 통해 다운로드
+      ㄴLAMA_TREx #scripts/setup/download_LAMA.sh, scripts/setup/preprocess_LAMA_TREx.sh
+      ㄴoriginal_LAMA #prepare_dataset.sh
+      ㄴscripts
       ㄴprepare_dataset.sh
       ㄴpreprocess_LAMA_TREx.py
     ㄴcompas
@@ -174,9 +177,9 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
       ㄴgerman.data
     ㄴINTapt
       ㄴdownload_data_model.py #데이터 및 모델 저장
-      ㄴesyoon___coraal_clean_test #download_data_model.py 실행을 통해 생성
-      ㄴmodels--esyoon--INTapt-HuBERT-large-coraal-prompt-generator #download_data_model.py 실행을 통해 생성
-      ㄴmodels--facebook--hubert-large-ls960-ft #download_data_model.py 실행을 통해 생성
+      ㄴesyoon___coraal_clean_test #download_data_model.py 실행
+      ㄴmodels--esyoon--INTapt-HuBERT-large-coraal-prompt-generator #download_data_model.py 실행
+      ㄴmodels--facebook--hubert-large-ls960-ft #download_data_model.py 실행
     ㄴkobbq
       ㄴkobbq_data
         ㄴKoBBQ_test_samples.tsv
