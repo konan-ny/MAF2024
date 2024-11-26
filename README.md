@@ -31,7 +31,7 @@ AIF360의 알고리즘 및 편향성 완화와 관련한 최신 연구들을 포
 * SOTA Algorithm
   * Co-occurrence-bias [📃paper](https://aclanthology.org/2023.findings-emnlp.518.pdf) [💻 code](https://github.com/CheongWoong/impact_of_cooccurrence)
   * Fair Streaming PCA [📃paper](https://arxiv.org/abs/2310.18593) [💻 code](https://github.com/HanseulJo/fair-streaming-pca/?tab=readme-ov-file)
-  * Representative Heuristic
+  * Representative Heuristic [📚 data](https://github.com/jongwonryu/RH)
   * Fair Batch [📃paper](https://arxiv.org/abs/2012.01696) [💻 code](https://github.com/yuji-roh/fairbatch) (to be updated)
 
 ### In-Processing Algorithms
@@ -99,16 +99,122 @@ Supported Python Configurations:
 | Ubuntu  | 3.8 – 3.11     |
 | Windows | 3.8 – 3.11     |
 
-### (Optional) Create a virtual environment
 MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요합니다. 시스템의 다른 프로젝트와 충돌할 수 있으므로 anaconda 가상 환경 혹은 docker를 권장드립니다.
 
 ### Installation
-1. 이 저장소의 최신 버전을 복제합니다.
-```bash
-git clone https://github.com/konanaif/MAF2024.git
-```
+1. 저장소 복제
+    ```bash
+    git clone https://github.com/konanaif/MAF2024.git
+    ```
 
-2. 필요한 패키지들을 설치합니다.
-```bash
-conda install --file requirements.txt
-```
+2. 환경 설정
+   - anaconda 가상 환경 사용 시, 가상 환경 생성 후 필요 패키지를 설치합니다.
+        ```bash
+        conda install --file requirements.txt
+        ```
+    - docker 이용 시, Dockerfile을 통해 이미지를 빌드합니다. MAF의 기본 작업 공간은 workspace 입니다.
+        ```bash
+        docker build -f Dockerfile -t maf2024:v1 ..
+        ```
+
+3. 텍스트의 경우, 외부 API를 이용합니다. API 이용을 위해 별도의 KEY 설정이 필요합니다.
+    ```bash
+    #OPENAI API KEY 설정 예시
+    export OPENAI_API_KEY = 'your_api_key'
+    ```
+
+4. 데이터 및 모델 세팅
+   MAF에서는 tabular, text, image, audio의 4가지 타입의 데이터를 지원하고 있으며, 세부 리스트는 다음과 같습니다.
+   - tabular
+     - COMPAS [📚 data](https://github.com/propublica/compas-analysis/)
+     - German credit scoring [📚 data](https://archive.ics.uci.edu/dataset/144/statlog+german+credit+data)
+     - Adult Census Income [📚 data](https://archive.ics.uci.edu/dataset/2/adult)
+
+   - image
+     - Public Figures Face Database [📚 data](https://www.cs.columbia.edu/CAVE/databases/pubfig/download/)
+     - CelebA [📚 data](https://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
+
+   - text
+     - KoBBQ [📚 data](https://github.com/naver-ai/KoBBQ/tree/main)
+     - CREHate [📚 data](https://github.com/nlee0212/CREHate)
+     - co-occurrence-bias [📚 data]()
+     - latte [📚 data]()
+     - RH [📚 data](https://github.com/jongwonryu/RH)
+     - Koglish [📚 data](https://huggingface.co/Jangyeong)
+
+    - audio
+      - esyoon/coraal_clean_test [📚 data](https://huggingface.co/datasets/esyoon/coraal_clean_test)
+
+
+   개별 알고리즘에 따른 데이터 및 모델 세팅이 필요합니다. 데이터와 모델은 각각 data와 model 폴더를 생성하여 다음과 같은 구조로 설정합니다.
+   4-1. data
+   ```bash
+    data
+    ㄴadult
+      ㄴadult.data
+      ㄴadult.names
+      ㄴadult.test
+    ㄴceleba
+      ㄴimg_align_celeba
+      ㄴlist_attr_celeba.csv
+      ㄴlist_attr_celeba.txt
+      ㄴlist_eval_partition.csv
+    ㄴco-occurrence-bias
+      ㄴdata_statistics
+      ㄴLAMA_TREx #preprocess_LAMA_TREx.py 실행을 통해 생성
+      ㄴoriginal_LAMA #prepare_dataset.sh 실행을 통해 생성
+      ㄴprepare_dataset.sh
+      ㄴpreprocess_LAMA_TREx.py
+    ㄴcompas
+      ㄴcompas-scores-two-years.csv
+    ㄴcrehate
+      ㄴCREHate_CP.csv
+      ㄴCREHate_SBIC.csv
+    ㄴgerman
+      ㄴgerman.data
+    ㄴINTapt
+      ㄴdownload_data_model.py #데이터 및 모델 저장
+      ㄴesyoon___coraal_clean_test #download_data_model.py 실행을 통해 생성
+      ㄴmodels--esyoon--INTapt-HuBERT-large-coraal-prompt-generator #download_data_model.py 실행을 통해 생성
+      ㄴmodels--facebook--hubert-large-ls960-ft #download_data_model.py 실행을 통해 생성
+    ㄴkobbq
+      ㄴkobbq_data
+        ㄴKoBBQ_test_samples.tsv
+      ㄴ0_evaluation_prompts.tsv
+    ㄴKoglish_dataset
+      ㄴdownload_Koglish_dataset.py #데이터 및 모델 저장
+      ㄴKoglish_STS
+      ㄴKoglish_NLI
+      ㄴKoglish_GLUE
+    ㄴlatte
+      ㄴbaq_questionnaire.csv
+      ㄴbbq.csv
+      ㄴdeontology.csv
+      ㄴdetox.csv
+      ㄴfair.csv
+      ㄴhate.csv
+      ㄴpolitical_compass.csv
+      ㄴproso_toxic.csv
+      ㄴproso.csv
+      ㄴutilitarianism.csv
+      ㄴvirtue.csv
+    ㄴpubfig
+      ㄴimage
+      ㄴdev_urls.txt
+      ㄴpubfig_attr_merged.csv
+      ㄴpubfig_attributes.txt
+    ㄴRH
+      ㄴRH_dataset.xlsx
+   ```
+
+    4-2. model
+    ```bash
+    model
+    ㄴConCSE
+      ㄴmbert_uncased
+      ㄴxlmr_base
+      ㄴxlmr_large
+    ㄴFairFiltering
+      ㄴbaseline.th
+      ㄴFilter_model.th
+    ```

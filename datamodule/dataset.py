@@ -49,9 +49,9 @@ class aifData(StandardDataset):
 
 class CelebADataset(StandardDataset):
     ROOT = parent_dir + "/MAF2024/data/celeba/"
-    IMAGE_DIR = ROOT + "img_align_celeba_test"  ######추후 변경 필요
+    IMAGE_DIR = ROOT + "img_align_celeba"
     ATTR_FILE = ROOT + "list_attr_celeba.txt"
-    META_DATA = ROOT + "list_eval_partition_for_test.csv"  ######추후 변경 필요
+    META_DATA = ROOT + "list_eval_partition.csv"
 
     def __init__(self):
         if not os.path.exists(self.IMAGE_DIR) or not os.path.exists(self.ATTR_FILE):
@@ -82,7 +82,7 @@ class CelebADataset(StandardDataset):
 
         if download_file(img_url, img_file) and download_file(attr_url, attr_file):
             try:
-                with zipfile.ZipFile(img_file, "r") as zip_ref:  # 이미지 압축 해제
+                with zipfile.ZipFile(img_file, "r") as zip_ref:
                     zip_ref.extractall(self.IMAGE_DIR)
                 print("Successfully extracted images.")
             except Exception as e:
@@ -91,7 +91,7 @@ class CelebADataset(StandardDataset):
             print("Download failed. Please try again.")
 
     def to_dataset(self):
-        img_files = glob.glob(self.IMAGE_DIR + "/*.jpg")  # 이미지 파일 경로들 가져오기
+        img_files = glob.glob(self.IMAGE_DIR + "/*.jpg")
         print(f"celeba image files {len(img_files)}")
         img_keys = []
         img_list = []
@@ -102,12 +102,11 @@ class CelebADataset(StandardDataset):
                 continue
 
             img = np.asarray(img)
-            if img.size == 3 * 224 * 224:  # 이미지 shape확인
+            if img.size == 3 * 224 * 224:
                 key = os.path.basename(ifn)
                 img_keys.append(key)
                 img_list.append(img)
 
-        # 속성 파일 직접 파싱(txt파일)
         with open(self.ATTR_FILE, "r") as f:
             lines = f.readlines()
 
@@ -118,16 +117,14 @@ class CelebADataset(StandardDataset):
             parts = line.strip().split()
             if len(parts) > 1:
                 filename = parts[0]
-                attrs = [
-                    1 if int(x) > 0 else 0 for x in parts[1:]
-                ]  # 이진분류를 위해 0 또는 1로 변환
+                attrs = [1 if int(x) > 0 else 0 for x in parts[1:]]
                 data.append([filename] + attrs)
 
         attribute = pd.DataFrame(data, columns=["image_id"] + attribute_names)
         attribute = attribute[attribute["image_id"].isin(img_keys)]
 
-        TARGET_NAME = "Blond_Hair"  # 타겟 속성 설정
-        BIAS_NAME = "Male"  # 보호 속성 설정
+        TARGET_NAME = "Blond_Hair"
+        BIAS_NAME = "Male"
         SELECTED_COLUMNS = ["image_id", TARGET_NAME, BIAS_NAME]
 
         print("creating selected_df")

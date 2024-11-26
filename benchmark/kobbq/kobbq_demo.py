@@ -38,9 +38,9 @@ class KoBBQArguments:
         print(choices)
         self.biased_answer = biased_answer
         self.answer = answer
-        self.prompt_tsv_path = data_dir + "evaluation_prompts.tsv"
+        self.prompt_tsv_path = data_dir + "0_evaluation_prompts.tsv"
 
-        """
+    """
     evaluation_dir = data_dir+'kobbq_result/KoBBQ_test/KoBBQ_test_evaluation'
     self.evaluation_tsv_path = evaluation_dir+f'_{prompt_id}.tsv'
     self.evaluation_json_path = evaluation_dir+f'_{prompt_id}.json'
