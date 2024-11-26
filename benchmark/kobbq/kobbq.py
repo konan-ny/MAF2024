@@ -23,8 +23,8 @@ data_dir = parent_dir + "/MAF2024/data/kobbq/"
 class PreprocessArguments:
     def __init__(self, prompt_id: int):
         self.prompt_id = prompt_id
-        self.samples_tsv_path = data_dir + "kobbq_data/KoBBQ_samples.tsv"
-        self.prompt_tsv_path = data_dir + "evaluation_prompts.tsv"
+        self.samples_tsv_path = data_dir + "kobbq_data/KoBBQ_test_samples.tsv"
+        self.prompt_tsv_path = data_dir + "0_evaluation_prompts.tsv"
         evaluation_dir = data_dir + "kobbq_result/KoBBQ_test/KoBBQ_test_evaluation"
         self.evaluation_tsv_path = evaluation_dir + f"_{prompt_id}.tsv"
         self.evaluation_json_path = evaluation_dir + f"_{prompt_id}.json"
@@ -77,7 +77,7 @@ class EvaluationArguments:
     def __init__(self, prompt_id: int, model_name: str, test_or_all: str):
         self.topic = "KoBBQ_test_evaluation"
         self.test_or_all = test_or_all
-        self.prompt_tsv_path = data_dir + "evaluation_prompts.tsv"
+        self.prompt_tsv_path = data_dir + "0_evaluation_prompts.tsv"
         self.prompt_id = prompt_id
         self.model_name = model_name.replace("/", "-")
         self.model_result_tsv_dir = (

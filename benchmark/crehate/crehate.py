@@ -262,8 +262,8 @@ def run(
 ):
 
     os.makedirs(output_dir, exist_ok=True)
-    sbic_data = pd.read_csv(data_dir + "CREHate_SBIC_sample.csv", index_col=False)
-    additional_data = pd.read_csv(data_dir + "CREHate_CP_sample.csv", index_col=False)
+    sbic_data = pd.read_csv(data_dir + "CREHate_SBIC.csv", index_col=False)
+    additional_data = pd.read_csv(data_dir + "CREHate_CP.csv", index_col=False)
 
     model, tokenizer = load_model(
         model_name=model_name,
