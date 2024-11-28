@@ -305,7 +305,7 @@ class LfFmodel:
         return accs, bias_list, label_list, predict_list
 
 
-class LFF:
+class LearningFromFairness:
     def __init__(self, dataset_name="pubfig", protected="Heavy Makeup"):
         self.dataset_name = dataset_name
         self.protected = protected
@@ -406,7 +406,7 @@ class LFF:
 
 
 if __name__ == "__main__":
-    lff_run = LFF(dataset_name="pubfig")
+    lff_run = LearningFromFairness(dataset_name="pubfig")
     metrics_orig, metrics_transf = lff_run.run()
     print("Metrics for original data:")
     print(metrics_orig)
