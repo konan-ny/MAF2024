@@ -138,7 +138,15 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
      - KoBBQ [📚 data](https://github.com/naver-ai/KoBBQ/tree/main)
      - CREHate [📚 data](https://github.com/nlee0212/CREHate)
      - co-occurrence-bias [📚 data](https://drive.google.com/file/d/19I7ron7FycqqJqRH0vdVHW_nCAKOf5g5/view)
-     - latte [📚 data]()
+     - latte
+        [📚 baq_questionnaire](https://pubmed.ncbi.nlm.nih.gov/24115185/)
+        [📚 bbq](https://github.com/nyu-mll/BBQ)
+        [📚 virtue, deontology, utilitarianism](https://www.catalyzex.com/paper/aligning-ai-with-shared-human-values/code)
+        [📚 hate](https://osf.io/53tfs/)
+        [📚 fair](https://paperswithcode.com/dataset/fairprism)
+        [📚 proso, proso_toxic](https://paperswithcode.com/dataset/prosocialdialog)
+        [📚 detox](https://github.com/s-nlp/paradetox)
+        [📚 political_compass](https://www.politicalcompass.org/test/en?page=1)
      - RH [📚 data](https://github.com/jongwonryu/RH)
      - Koglish [📚 data](https://huggingface.co/Jangyeong)
 
@@ -149,75 +157,76 @@ MAF의 원활한 구동을 위해서는 특정 버전의 패키지들이 필요�
     - ConCSE [📚 model](https://drive.google.com/drive/folders/1k3JDP4WfRkVTypaiL3L1RO1qeve2yvhF?usp=sharing)
     - Fair Dimension Filtering [📚 model]()
    개별 알고리즘에 따른 데이터 및 모델 세팅이 필요합니다. 데이터와 모델은 각각 data와 model 폴더를 생성하여 다음과 같은 구조로 설정합니다.
-   4-1. data
-   ```bash
-    data
-    ㄴadult
-      ㄴadult.data
-      ㄴadult.names
-      ㄴadult.test
-    ㄴceleba
-      ㄴimg_align_celeba
-      ㄴlist_attr_celeba.csv
-      ㄴlist_attr_celeba.txt
-      ㄴlist_eval_partition.csv
-    ㄴco-occurrence-bias
-      ㄴdata_statistics #링크를 통해 다운로드
-      ㄴLAMA_TREx #scripts/setup/download_LAMA.sh, scripts/setup/preprocess_LAMA_TREx.sh
-      ㄴoriginal_LAMA #prepare_dataset.sh
-      ㄴscripts
-      ㄴprepare_dataset.sh
-      ㄴpreprocess_LAMA_TREx.py
-    ㄴcompas
-      ㄴcompas-scores-two-years.csv
-    ㄴcrehate
-      ㄴCREHate_CP.csv
-      ㄴCREHate_SBIC.csv
-    ㄴgerman
-      ㄴgerman.data
-    ㄴINTapt
-      ㄴdownload_data_model.py #데이터 및 모델 저장
-      ㄴesyoon___coraal_clean_test #download_data_model.py 실행
-      ㄴmodels--esyoon--INTapt-HuBERT-large-coraal-prompt-generator #download_data_model.py 실행
-      ㄴmodels--facebook--hubert-large-ls960-ft #download_data_model.py 실행
-    ㄴkobbq
-      ㄴkobbq_data
-        ㄴKoBBQ_test_samples.tsv
-      ㄴ0_evaluation_prompts.tsv
-    ㄴKoglish_dataset
-      ㄴdownload_Koglish_dataset.py #데이터 및 모델 저장
-      ㄴKoglish_STS
-      ㄴKoglish_NLI
-      ㄴKoglish_GLUE
-    ㄴlatte
-      ㄴbaq_questionnaire.csv
-      ㄴbbq.csv
-      ㄴdeontology.csv
-      ㄴdetox.csv
-      ㄴfair.csv
-      ㄴhate.csv
-      ㄴpolitical_compass.csv
-      ㄴproso_toxic.csv
-      ㄴproso.csv
-      ㄴutilitarianism.csv
-      ㄴvirtue.csv
-    ㄴpubfig
-      ㄴimage
-      ㄴdev_urls.txt
-      ㄴpubfig_attr_merged.csv
-      ㄴpubfig_attributes.txt
-    ㄴRH
-      ㄴRH_dataset.xlsx
-   ```
 
-    4-2. model
-    ```bash
-    model
-    ㄴConCSE
-      ㄴmbert_uncased
-      ㄴxlmr_base
-      ㄴxlmr_large
-    ㄴFairFiltering
-      ㄴbaseline.th
-      ㄴFilter_model.th
-    ```
+       4-1. data
+        ```bash
+            data
+              ㄴadult
+                ㄴadult.data
+                ㄴadult.names
+                ㄴadult.test
+              ㄴceleba
+                ㄴimg_align_celeba
+                ㄴlist_attr_celeba.csv
+                ㄴlist_attr_celeba.txt
+                ㄴlist_eval_partition.csv
+              ㄴco-occurrence-bias
+                ㄴdata_statistics #링크를 통해 다운로드
+                ㄴLAMA_TREx #scripts/setup/download_LAMA.sh, scripts/setup/preprocess_LAMA_TREx.sh
+                ㄴoriginal_LAMA #prepare_dataset.sh
+                ㄴscripts
+                ㄴprepare_dataset.sh
+                ㄴpreprocess_LAMA_TREx.py
+              ㄴcompas
+                ㄴcompas-scores-two-years.csv
+              ㄴcrehate
+                ㄴCREHate_CP.csv
+                ㄴCREHate_SBIC.csv
+              ㄴgerman
+                ㄴgerman.data
+              ㄴINTapt
+                ㄴdownload_data_model.py #esyoon/coraal_clean_test 데이터 및 모델 저장
+                ㄴesyoon___coraal_clean_test
+                ㄴmodels--esyoon--INTapt-HuBERT-large-coraal-prompt-generator
+                ㄴmodels--facebook--hubert-large-ls960-ft
+              ㄴkobbq
+                ㄴkobbq_data
+                    ㄴKoBBQ_test_samples.tsv
+                ㄴ0_evaluation_prompts.tsv
+              ㄴKoglish_dataset
+                ㄴdownload_Koglish_dataset.py #Koglish 데이터 및 모델 저장
+                ㄴKoglish_STS
+                ㄴKoglish_NLI
+                ㄴKoglish_GLUE
+              ㄴlatte
+                ㄴbaq_questionnaire.csv
+                ㄴbbq.csv
+                ㄴdeontology.csv
+                ㄴdetox.csv
+                ㄴfair.csv
+                ㄴhate.csv
+                ㄴpolitical_compass.csv
+                ㄴproso_toxic.csv
+                ㄴproso.csv
+                ㄴutilitarianism.csv
+                ㄴvirtue.csv
+              ㄴpubfig
+                ㄴimage
+                ㄴdev_urls.txt
+                ㄴpubfig_attr_merged.csv
+                ㄴpubfig_attributes.txt
+              ㄴRH
+                ㄴRH_dataset.xlsx
+         ```
+
+        4-2. model
+        ```bash
+            model
+              ㄴConCSE
+                ㄴmbert_uncased
+                ㄴxlmr_base
+                ㄴxlmr_large
+              ㄴFairFiltering
+                ㄴbaseline.th
+                ㄴFilter_model.th
+        ```
