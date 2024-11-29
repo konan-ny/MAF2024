@@ -53,4 +53,6 @@ def compute_metrics(
         "negative_predictive_value"
     ] = classified_metric_pred.negative_predictive_value()
 
+    for k in metrics:
+        metrics[k] = round(metrics[k], 4)
     return metrics

@@ -10,4 +10,5 @@ from MAF2024.algorithms.inprocessing.fair_dimension_filtering import FairDimFilt
 from MAF2024.algorithms.inprocessing.fair_feature_distillation import (
     FairFeatureDistillation,
 )
+from MAF2024.algorithms.inprocessing.learning_from_fairness import LearningFromFairness
 from MAF2024.algorithms.inprocessing.meta_classifier import MetaFairClassifier
