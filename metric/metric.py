@@ -118,6 +118,21 @@ def get_metrics(dataset, data_name: str):
         ACC=cls_metric.accuracy(),
     )
 
+    clsmetrics = dict(
+        error_rate=round(cls_metric.error_rate(), 3),
+        average_odds_difference=round(cls_metric.average_odds_difference(), 3),
+        average_abs_odds_difference=round(cls_metric.average_abs_odds_difference(), 3),
+        selection_rate=round(cls_metric.selection_rate(), 3),
+        disparate_impact=round(cls_metric.disparate_impact(), 3),
+        statistical_parity_difference=round(
+            cls_metric.statistical_parity_difference(), 3
+        ),
+        generalized_entropy_index=round(cls_metric.generalized_entropy_index(), 3),
+        theil_index=round(cls_metric.theil_index(), 3),
+        equal_opportunity_difference=round(
+            cls_metric.equal_opportunity_difference(), 3
+        ),
+    )
     metrics = {
         "data": {
             "protected": dataset.protected_attribute_names[0],
@@ -149,23 +164,25 @@ def get_metrics(dataset, data_name: str):
             "accuracy": round(perfm["ACC"], 3),
         },
         "classify": {
-            "error_rate": round(cls_metric.error_rate(), 3),
-            "average_odds_difference": round(cls_metric.average_odds_difference(), 3),
-            "average_abs_odds_difference": round(
-                cls_metric.average_abs_odds_difference(), 3
-            ),
-            "selection_rate": round(cls_metric.selection_rate(), 3),
-            "disparate_impact": round(cls_metric.disparate_impact(), 3),
-            "statistical_parity_difference": round(
-                cls_metric.statistical_parity_difference(), 3
-            ),
-            "generalized_entropy_index": round(
-                cls_metric.generalized_entropy_index(), 3
-            ),
-            "theil_index": round(cls_metric.theil_index(), 3),
-            "equal_opportunity_difference": round(
-                cls_metric.equal_opportunity_difference(), 3
-            ),
+            "error_rate": clsmetrics["error_rate"],
+            "average_odds_difference": clsmetrics["average_odds_difference"]
+            if not pd.isna(clsmetrics["average_odds_difference"])
+            else 0.0,
+            "average_abs_odds_difference": clsmetrics["average_abs_odds_difference"]
+            if not pd.isna(clsmetrics["average_abs_odds_difference"])
+            else 0.0,
+            "selection_rate": clsmetrics["selection_rate"],
+            "disparate_impact": clsmetrics["disparate_impact"]
+            if not pd.isna(clsmetrics["disparate_impact"])
+            else 0.0,
+            "statistical_parity_difference": clsmetrics["statistical_parity_difference"]
+            if not pd.isna(clsmetrics["statistical_parity_difference"])
+            else 0.0,
+            "generalized_entropy_index": clsmetrics["generalized_entropy_index"],
+            "theil_index": clsmetrics["theil_index"],
+            "equal_opportunity_difference": clsmetrics["equal_opportunity_difference"]
+            if not pd.isna(clsmetrics["equal_opportunity_difference"])
+            else 0.0,
         },
     }
     return metrics
