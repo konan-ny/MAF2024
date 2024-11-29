@@ -171,14 +171,11 @@ class RawDataSet:
 
         for cate in category_list:
             categories = Counter(temp[cate])
-
             c2i = {}
             i = 0
             for c, f in categories.items():
                 c2i[c] = i
-
             temp[cate] = temp[cate].map(lambda x: c2i[x])
-
         return temp
 
 
