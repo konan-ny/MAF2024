@@ -232,7 +232,10 @@ def load_model(
     model = HubertForCTC.from_pretrained(model_path)
     prompt_generator = PromptGenerator(args, model.config)
     prompt_generator.load_state_dict(
-        torch.load(os.path.join(prompt_generator_path, "prompt_generator.pt"))
+        torch.load(
+            os.path.join(prompt_generator_path, "prompt_generator.pt"),
+            map_location=args.device,
+        )
     )
 
     model.to(args.device)
